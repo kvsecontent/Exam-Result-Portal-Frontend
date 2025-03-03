@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam Results Portal</title>
     <style>
-        /* CSS styles remain unchanged */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f5f5f5;
@@ -134,7 +133,28 @@
         
         .subjects-table th, .subjects-table td {
             border: 1px solid #ddd;
-            padding:.grade-D\+ { color: #FF9800; font-weight: bold; }
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .subjects-table th {
+            background-color: #f5f5f5;
+        }
+        
+        .subjects-table th:nth-child(1),
+        .subjects-table th:nth-child(2),
+        .subjects-table td:nth-child(2),
+        .subjects-table th:nth-child(3),
+        .subjects-table td:nth-child(3),
+        .subjects-table th:nth-child(4),
+        .subjects-table td:nth-child(4) {
+            text-align: center;
+        }
+        
+        .grade-A, .grade-A\+ { color: #4CAF50; font-weight: bold; }
+        .grade-B, .grade-B\+ { color: #2196F3; font-weight: bold; }
+        .grade-C, .grade-C\+ { color: #FF9800; font-weight: bold; }
+        .grade-D, .grade-D\+ { color: #FF9800; font-weight: bold; }
         .grade-E { color: #FF7043; font-weight: bold; }
         .grade-F { color: #F44336; font-weight: bold; }
         
@@ -145,7 +165,6 @@
             margin-bottom: 15px;
         }
         
-        /* Rest of the CSS styles... */
         .total-section, .result-section {
             flex: 1;
             min-width: 200px;
@@ -171,7 +190,6 @@
             font-weight: bold;
         }
         
-        /* More CSS styles... */
         .signature-section {
             display: flex;
             flex-wrap: wrap;
@@ -224,7 +242,6 @@
             margin: 0 auto;
         }
         
-        /* Media queries for responsive design */
         @media (max-width: 600px) {
             .container {
                 padding: 0;
@@ -260,7 +277,6 @@
             }
         }
         
-        /* Print styles */
         @media print {
             body * {
                 visibility: hidden;
@@ -419,7 +435,7 @@
 
     <script>
         // Replace with your backend API URL
-        const API_BASE_URL = 'https://exam-results-api.onrender.com'; // You'll update this after deployment
+        const API_BASE_URL = 'https://exam-results-api.onrender.com'; 
 
         async function fetchDataFromBackend(rollNumber) {
             try {
