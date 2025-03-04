@@ -437,6 +437,17 @@
         // Replace with your backend API URL
         const API_BASE_URL = 'https://exam-results-api.onrender.com'; 
 
+        // Define common assessment component names for recognizing subject parts
+        const COMPONENT_NAMES = [
+            'Periodic_Test',
+            'Notebook_Submission',
+            'Subject_Enrichment',
+            'MDP',
+            'Oral_Test',
+            'MidTerm_Exam',
+            'Learner_Diary'
+        ];
+
         async function fetchDataFromBackend(rollNumber) {
             try {
                 const url = `${API_BASE_URL}/api/student/${rollNumber}`;
@@ -444,13 +455,96 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    return result.data;
+                    // Process the data to detect subjects with data
+                    const data = result.data;
+                    
+                    // Process the subjects to group related components
+                    processSubjects(data);
+                    
+                    return data;
                 }
                 return null; // Student not found
             } catch (error) {
                 console.error('Error fetching data:', error);
                 return null;
             }
+        }
+
+        function processSubjects(data) {
+            if (!data.subjects || !Array.isArray(data.subjects)) {
+                return;
+            }
+
+            // Group subjects by their base name (before the underscore)
+            const groupedSubjects = {};
+            
+            data.subjects.forEach(subject => {
+                // First check if this is a component or a main subject
+                let isComponent = false;
+                let baseSubjectName = subject.name;
+                
+                // Check if this is a component of a subject (e.g., Hindi_Periodic_Test)
+                for (const componentName of COMPONENT_NAMES) {
+                    if (subject.name.includes('_' + componentName)) {
+                        // It's a component, extract the base subject name
+                        baseSubjectName = subject.name.split('_')[0];
+                        isComponent = true;
+                        break;
+                    }
+                }
+                
+                // If not already initialized, create the subject group
+                if (!groupedSubjects[baseSubjectName]) {
+                    groupedSubjects[baseSubjectName] = {
+                        name: baseSubjectName,
+                        maxMarks: subject.maxMarks || 100,
+                        obtained: isComponent ? 0 : (subject.obtained || 0),
+                        grade: isComponent ? '-' : (subject.grade || '-'),
+                        components: [],
+                        hasData: isComponent ? false : (subject.obtained > 0)
+                    };
+                }
+                
+                // If it's a component, add it to the list
+                if (isComponent) {
+                    groupedSubjects[baseSubjectName].components.push({
+                        name: subject.name,
+                        marks: subject.obtained || 0
+                    });
+                    
+                    // If any component has non-zero marks, the subject has data
+                    if (subject.obtained > 0) {
+                        groupedSubjects[baseSubjectName].hasData = true;
+                    }
+                    
+                    // Add to the total obtained marks for this subject
+                    groupedSubjects[baseSubjectName].obtained += subject.obtained || 0;
+                }
+            });
+            
+            // Calculate grades for subjects that didn't have them
+            for (const subjectName in groupedSubjects) {
+                const subject = groupedSubjects[subjectName];
+                if (subject.grade === '-') {
+                    subject.grade = calculateGrade(subject.obtained);
+                }
+            }
+            
+            // Convert the grouped subjects object to an array and filter out subjects without data
+            const processedSubjects = Object.values(groupedSubjects)
+                .filter(subject => subject.hasData);
+            
+            // Replace the original subjects array with the processed one
+            data.processedSubjects = processedSubjects;
+        }
+
+        function calculateGrade(marks) {
+            if (marks >= 90) return 'A';
+            else if (marks >= 80) return 'B';
+            else if (marks >= 70) return 'C';
+            else if (marks >= 60) return 'D';
+            else if (marks >= 50) return 'E';
+            else return 'F';
         }
 
         function getGradeClass(grade) {
@@ -520,8 +614,11 @@
             const tableBody = document.getElementById('marksTableBody');
             tableBody.innerHTML = '';
             
+            // Use the processed subjects if available, otherwise use the original subjects
+            const subjectsToDisplay = data.processedSubjects || data.subjects;
+            
             // Add subject rows
-            data.subjects.forEach(subject => {
+            subjectsToDisplay.forEach(subject => {
                 const row = document.createElement('tr');
                 
                 const nameCell = document.createElement('td');
