@@ -129,30 +129,81 @@
             margin: 5px 0;
         }
         
+        /* Table containers with horizontal scroll on mobile */
+        #simpleTableContainer, #detailedTableContainer {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Better scrolling on iOS */
+            position: relative;
+            border-radius: 4px;
+            background-color: #fff;
+            border: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        
+        /* Enhanced table border styles */
         .subjects-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 15px;
+            margin-bottom: 0;
             font-size: 14px;
+            min-width: 500px;
+            background-color: #fff;
+            border: 2px solid #000;
+            box-sizing: border-box;
         }
         
-        .subjects-table th, .subjects-table td {
-            border: 1px solid #ddd;
+        .subjects-table th, 
+        .subjects-table td {
+            border: 1px solid #000;
             padding: 8px;
-            text-align: left;
+            text-align: center;
+            width: auto;
+            position: relative;
+            box-sizing: border-box;
+        }
+        
+        /* Specific styles for component headers with rowspan/colspan */
+        .subjects-table th[rowspan],
+        .subjects-table th[colspan] {
+            border: 1px solid #000;
+            box-shadow: inset 0 0 0 1px #000;
+        }
+        
+        /* Add top and bottom border to table head */
+        .subjects-table thead {
+            border-bottom: 2px solid #000;
+        }
+        
+        /* Add border to component header */
+        .subjects-table th.component-header {
+            border: 1px solid #000;
+            box-shadow: inset 0 0 0 1px #000;
+        }
+        
+        /* Make all component columns equal width */
+        .subjects-table th.component-header {
+            width: 80px; /* Fixed width for components */
+            min-width: 80px;
+            max-width: 100px;
+        }
+        
+        .subjects-table th:first-child { /* Subject column */
+            width: 120px;
+        }
+        
+        .subjects-table th.total-header, 
+        .subjects-table th.grade-header {
+            width: 60px;
         }
         
         .subjects-table th {
             background-color: #f5f5f5;
+            position: relative;
+            z-index: 1;
         }
         
-        .subjects-table th:nth-child(1),
-        .subjects-table th:nth-child(2),
-        .subjects-table td:nth-child(2),
-        .subjects-table th:nth-child(3),
-        .subjects-table td:nth-child(3),
-        .subjects-table th:nth-child(4),
-        .subjects-table td:nth-child(4) {
+        .subjects-table th:first-child, .subjects-table td:first-child {
             text-align: center;
         }
         
@@ -230,7 +281,7 @@
         
         .disclaimer {
             text-align: center;
-            margin: 30px auto 15px;
+            margin: 20px auto 10px;
             font-size: 12px;
             color: #666;
             border-top: 1px solid #eee;
@@ -240,6 +291,7 @@
             position: relative;
             clear: both;
             display: block;
+            page-break-inside: avoid;
         }
         
         .disclaimer p {
@@ -247,126 +299,122 @@
             margin: 0 auto;
         }
         
-        /* Skeleton loader styles */
+        .component-weight {
+            font-size: 11px;
+            color: #666;
+            display: inline-block !important; 
+            margin-top: 4px;
+            font-weight: normal;
+            background-color: #f7f7f7;
+            padding: 1px 3px;
+            border-radius: 3px;
+        }
+        
+        /* Mobile scroll indicator */
+        .scroll-indicator {
+            display: none;
+            text-align: center;
+            margin: 0;
+            padding: 3px 0;
+            color: #3f51b5;
+            font-size: 12px;
+            background-color: rgba(255,255,255,0.9);
+            position: sticky;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        /* Skeleton loading animation */
+        @keyframes shimmer {
+            0% {
+                background-position: -468px 0;
+            }
+            100% {
+                background-position: 468px 0;
+            }
+        }
+        
+        .skeleton {
+            background: #f6f7f8;
+            background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+            background-repeat: no-repeat;
+            background-size: 800px 104px;
+            display: block;
+            border-radius: 4px;
+            position: relative;
+            animation-duration: 1.5s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: infinite;
+            animation-name: shimmer;
+            animation-timing-function: linear;
+        }
+        
         .skeleton-loader {
             display: none;
             padding: 15px;
-            animation: pulse 1.5s infinite ease-in-out;
         }
         
-        @keyframes pulse {
-            0% {
-                opacity: 0.6;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0.6;
-            }
+        .skeleton-line {
+            height: 16px;
+            margin-bottom: 8px;
+            border-radius: 2px;
         }
         
-        .skeleton-school-info {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        .skeleton-logo {
-            width: 100px;
-            height: 80px;
-            margin: 0 auto;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-        }
-        
-        .skeleton-title {
-            height: 20px;
-            width: 60%;
-            margin: 10px auto;
-            background-color: #e0e0e0;
-            border-radius: 3px;
-        }
-        
-        .skeleton-text {
-            height: 14px;
+        .skeleton-line.title {
+            height: 24px;
             width: 40%;
-            margin: 5px auto;
-            background-color: #e0e0e0;
-            border-radius: 3px;
+            margin: 0 auto 15px auto;
         }
         
-        .skeleton-student-info {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            border: 1px solid #eee;
-            padding: 10px;
-            border-radius: 5px;
+        .skeleton-line.full {
+            width: 100%;
         }
         
-        .skeleton-info-row {
-            height: 14px;
-            width: 90%;
-            margin: 8px 0;
-            background-color: #e0e0e0;
-            border-radius: 3px;
+        .skeleton-line.medium {
+            width: 70%;
+        }
+        
+        .skeleton-line.short {
+            width: 50%;
         }
         
         .skeleton-table {
             width: 100%;
-            margin-bottom: 15px;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
         
-        .skeleton-table-header {
-            height: 30px;
-            width: 100%;
-            background-color: #e0e0e0;
-            margin-bottom: 8px;
-            border-radius: 3px;
-        }
-        
-        .skeleton-table-row {
-            height: 20px;
-            width: 100%;
-            background-color: #e0e0e0;
-            margin-bottom: 8px;
-            border-radius: 3px;
-        }
-        
-        .skeleton-summary {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-        
-        .skeleton-section {
-            flex: 1;
-            min-width: 200px;
-            padding: 10px;
+        .skeleton-table th, .skeleton-table td {
             border: 1px solid #eee;
-            border-radius: 5px;
-            margin: 5px;
+            height: 30px;
         }
         
         .loading-message {
-            padding: 15px;
-            text-align: center;
-            background-color: #fff3e0;
-            border-left: 5px solid #FF9800;
-            margin: 10px 0;
             display: none;
+            text-align: center;
+            padding: 15px;
+            margin-top: 10px;
             border-radius: 4px;
-        }
-        
-        .loading-message p {
-            margin: 0;
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+            color: #0d47a1;
             font-size: 14px;
-            color: #795548;
         }
         
-        .loading-spinner {
+        .loading-message.error {
+            background-color: #ffebee;
+            border: 1px solid #ffcdd2;
+            color: #b71c1c;
+        }
+        
+        .loading-message.success {
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            color: #1b5e20;
+        }
+        
+        .spinner {
             display: inline-block;
             width: 20px;
             height: 20px;
@@ -374,13 +422,14 @@
             border-radius: 50%;
             border-top-color: #3f51b5;
             animation: spin 1s linear infinite;
-            margin-right: 10px;
             vertical-align: middle;
+            margin-right: 8px;
         }
         
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
         
         @media (max-width: 600px) {
@@ -416,8 +465,28 @@
                 width: 100%;
                 margin-left: 0;
             }
+            
+            /* Show horizontal scroll indicators on mobile */
+            .scroll-indicator {
+                display: block;
+            }
+            
+            /* Table styles for mobile */
+            .subjects-table {
+                font-size: 12px;
+            }
+            
+            .subjects-table th, .subjects-table td {
+                padding: 4px;
+                white-space: nowrap;
+            }
+            
+            .component-weight {
+                font-size: 8px;
+            }
         }
         
+        /* Enhanced print styles for tables */
         @media print {
             body * {
                 visibility: hidden;
@@ -442,8 +511,76 @@
                 border: 1px solid #000 !important;
             }
             
-            .subjects-table th, .subjects-table td {
+            /* Strong borders for tables - enhanced */
+            .subjects-table {
+                border: 2px solid #000 !important;
+                border-collapse: collapse !important;
+                empty-cells: show !important;
+                box-shadow: none !important;
+                outline: 2px solid #000 !important;
+                outline-offset: 0 !important;
+            }
+            
+            /* Force ALL borders on all table elements */
+            .subjects-table * {
+                border-color: #000 !important;
+            }
+            
+            .subjects-table th, 
+            .subjects-table td {
                 border: 1px solid #000 !important;
+                padding: 3px !important;
+                background-clip: padding-box !important;
+                box-shadow: inset 0 0 0 1px #000 !important;
+                -webkit-box-shadow: inset 0 0 0 1px #000 !important;
+            }
+            
+            .subjects-table tr {
+                border: 1px solid #000 !important;
+                page-break-inside: avoid !important;
+            }
+            
+            /* Special handling for rowspan/colspan cells in print */
+            .subjects-table th[rowspan],
+            .subjects-table th[colspan] {
+                border: 1px solid #000 !important;
+                box-shadow: inset 0 0 0 1px #000 !important;
+                -webkit-box-shadow: inset 0 0 0 1px #000 !important;
+                outline: 1px solid #000 !important;
+                outline-offset: -1px !important;
+            }
+            
+            /* Force borders on thead */
+            .subjects-table thead {
+                border: 2px solid #000 !important;
+                border-bottom: 2px solid #000 !important;
+            }
+            
+            .subjects-table thead tr {
+                border: 1px solid #000 !important;
+            }
+            
+            /* Force borders on component headers */
+            .subjects-table th.component-header,
+            .subjects-table th.total-header,
+            .subjects-table th.grade-header {
+                border: 1px solid #000 !important;
+                box-shadow: inset 0 0 0 1px #000 !important;
+                -webkit-box-shadow: inset 0 0 0 1px #000 !important;
+            }
+            
+            /* Add this to force borders to be visible */
+            .subjects-table th.component-header div {
+                position: relative !important;
+                border-bottom: none !important;
+            }
+            
+            /* Force print to render backgrounds */
+            .subjects-table th {
+                background-color: #f5f5f5 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
             }
             
             .total-section, .result-section {
@@ -465,23 +602,63 @@
                 position: relative !important;
                 visibility: visible !important;
                 display: block !important;
-                margin: 30px auto 15px !important;
+                margin: 15px auto 5px !important;
                 text-align: center !important;
                 font-family: 'Times New Roman', Times, serif !important;
                 width: 90% !important;
+                page-break-before: avoid !important;
+                page-break-inside: avoid !important;
             }
             
             .disclaimer p {
                 text-align: center !important;
                 margin: 0 auto !important;
                 width: 100% !important;
+                font-size: 10px !important;
             }
             
             .pass { color: #4CAF50 !important; }
             .fail { color: #F44336 !important; }
             
+            /* Hide scroll indicators when printing */
+            .scroll-indicator {
+                display: none !important;
+            }
+            
+            /* Scrolling containers should display their full content */
+            #simpleTableContainer, #detailedTableContainer {
+                overflow: visible !important;
+                border: none !important;
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                margin: 0 !important;
+            }
+            
             @page {
-                size: A4 portrait;
+                size: portrait;
+                margin: 5mm;
+            }
+        }
+        
+        /* Landscape print styles - will be applied when body has 'print-landscape' class */
+        body.print-landscape {
+            width: auto;
+            height: auto;
+        }
+        
+        @media print and (min-width: 800px) {
+            body.print-landscape .subjects-table {
+                font-size: 10px !important;
+            }
+            
+            body.print-landscape .subjects-table th, 
+            body.print-landscape .subjects-table td {
+                padding: 4px !important;
+            }
+            
+            @page {
+                size: landscape;
                 margin: 10mm;
             }
         }
@@ -498,52 +675,75 @@
             <button id="searchButton" onclick="fetchResult()">Get Result</button>
         </div>
         
-        <div class="loading-message" id="loadingMessage">
-            <p><span class="loading-spinner"></span> Please wait while we fetch your results. Our server may take up to 30 seconds to wake up if it hasn't been used recently.</p>
+        <!-- Loading Message Section -->
+        <div id="loadingMessage" class="loading-message">
+            <div class="spinner"></div>
+            <span id="loadingText">Please wait while we connect to the server. This might take a few seconds as the free tier service wakes up...</span>
         </div>
-        
+
         <div class="error-message" id="errorMessage">
             Student record not found. Please check the Enrollment number and try again.
         </div>
         
         <!-- Skeleton Loader -->
-        <div class="skeleton-loader" id="skeletonLoader">
-            <div class="skeleton-school-info">
-                <div class="skeleton-logo"></div>
-                <div class="skeleton-title"></div>
-                <div class="skeleton-text"></div>
+        <div id="skeletonLoader" class="skeleton-loader">
+            <div class="school-info">
+                <div class="skeleton skeleton-line title"></div>
+                <div class="skeleton skeleton-line short" style="margin: 0 auto;"></div>
             </div>
             
-            <div class="skeleton-student-info">
+            <div class="student-info">
                 <div class="student-info-item">
-                    <div class="skeleton-info-row"></div>
-                    <div class="skeleton-info-row"></div>
-                    <div class="skeleton-info-row"></div>
+                    <div class="skeleton skeleton-line full"></div>
+                    <div class="skeleton skeleton-line full"></div>
+                    <div class="skeleton skeleton-line full"></div>
                 </div>
                 <div class="student-info-item text-right">
-                    <div class="skeleton-info-row"></div>
-                    <div class="skeleton-info-row"></div>
-                    <div class="skeleton-info-row"></div>
+                    <div class="skeleton skeleton-line full"></div>
+                    <div class="skeleton skeleton-line full"></div>
+                    <div class="skeleton skeleton-line full"></div>
                 </div>
             </div>
             
-            <div class="skeleton-table">
-                <div class="skeleton-table-header"></div>
-                <div class="skeleton-table-row"></div>
-                <div class="skeleton-table-row"></div>
-                <div class="skeleton-table-row"></div>
-                <div class="skeleton-table-row"></div>
-                <div class="skeleton-table-row"></div>
-            </div>
+            <table class="skeleton-table">
+                <thead>
+                    <tr>
+                        <th><div class="skeleton"></div></th>
+                        <th><div class="skeleton"></div></th>
+                        <th><div class="skeleton"></div></th>
+                        <th><div class="skeleton"></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><div class="skeleton"></div></td>
+                        <td><div class="skeleton"></div></td>
+                        <td><div class="skeleton"></div></td>
+                        <td><div class="skeleton"></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="skeleton"></div></td>
+                        <td><div class="skeleton"></div></td>
+                        <td><div class="skeleton"></div></td>
+                        <td><div class="skeleton"></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="skeleton"></div></td>
+                        <td><div class="skeleton"></div></td>
+                        <td><div class="skeleton"></div></td>
+                        <td><div class="skeleton"></div></td>
+                    </tr>
+                </tbody>
+            </table>
             
-            <div class="skeleton-summary">
-                <div class="skeleton-section">
-                    <div class="skeleton-info-row"></div>
-                    <div class="skeleton-info-row"></div>
+            <div class="summary">
+                <div style="flex: 1;">
+                    <div class="skeleton skeleton-line medium"></div>
+                    <div class="skeleton skeleton-line short"></div>
                 </div>
-                <div class="skeleton-section">
-                    <div class="skeleton-info-row"></div>
-                    <div class="skeleton-info-row"></div>
+                <div style="flex: 1; text-align: center;">
+                    <div class="skeleton skeleton-line medium" style="margin: 0 auto;"></div>
+                    <div class="skeleton skeleton-line short" style="margin: 0 auto;"></div>
                 </div>
             </div>
         </div>
@@ -574,19 +774,40 @@
                 <p><strong>Exam:</strong> <span id="examName">Final Term</span></p>
             </div>
             
-            <table class="subjects-table">
-                <thead>
-                    <tr>
-                        <th>Subject</th>
-                        <th>Max Marks</th>
-                        <th>Marks Obtained</th>
-                        <th>Grade</th>
-                    </tr>
-                </thead>
-                <tbody id="marksTableBody">
-                    <!-- Subject marks will be inserted here -->
-                </tbody>
-            </table>
+            <!-- Simple table view -->
+            <div id="simpleTableContainer">
+                <div class="scroll-indicator">
+                    <span>← Swipe to view complete table →</span>
+                </div>
+                <table class="subjects-table" id="simpleTable">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Max Marks</th>
+                            <th>Marks Obtained</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody id="simpleTableBody">
+                        <!-- Subject marks will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Detailed table view -->
+            <div id="detailedTableContainer" style="display: none;">
+                <div class="scroll-indicator">
+                    <span>← Swipe to view complete table →</span>
+                </div>
+                <table class="subjects-table" id="detailedTable">
+                    <!-- Table headers will be created dynamically -->
+                    <thead id="detailedTableHead">
+                    </thead>
+                    <tbody id="detailedTableBody">
+                        <!-- Detailed subject marks will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
             
             <div class="summary">
                 <div class="total-section">
@@ -615,145 +836,391 @@
             </div>
             
             <div class="print-button">
-                <button onclick="window.print()" style="background-color: #4CAF50;">Print Result</button>
+                <button onclick="printResult()" style="background-color: #4CAF50;">Print Result</button>
             </div>
         </div>
     </div>
 
     <script>
         // Replace with your backend API URL
-        const API_BASE_URL = 'https://exam-results-api.onrender.com'; 
-
-        // Define common assessment component names for recognizing subject parts
-        const COMPONENT_NAMES = [
-            'Periodic_Test',
-            'Notebook_Submission',
-            'Subject_Enrichment',
-            'MDP',
-            'Oral_Test',
-            'MidTerm_Exam',
-            'Learner_Diary'
-        ];
-
-        // Add a timeout variable to handle API request timeout
-        let apiTimeout;
+        const API_BASE_URL = 'https://term-exam-result-api.onrender.com';
         
-        // Add a variable to track if the server is awake
-        let isServerAwake = false;
-
+        // Create an invisible debug div to help diagnose issues
+        const debugDiv = document.createElement('div');
+        debugDiv.id = 'debug-info';
+        debugDiv.style.display = 'none';
+        debugDiv.innerHTML = `
+            <h3>Debug Information</h3>
+            <pre id="debug-content"></pre>
+        `;
+        document.body.appendChild(debugDiv);
+        
+        // Helper function to add debug info
+        window.addDebug = (text) => {
+            const debugContent = document.getElementById('debug-content');
+            if (debugContent) {
+                debugContent.textContent += text + '\n';
+            }
+        };
+        
+        // Track API response time to determine if server is "cold"
+        let apiResponseStart = 0;
+        let isFirstFetch = true;
+        let isServerCold = false;
+        
+        // Flag to check if we need detailed view or not
+        let useDetailedView = false;
+        
+        // Global flag to track if Sanskrit subject exists
+        window.hasSanskritSubject = false;
+        
         async function fetchDataFromBackend(rollNumber) {
             try {
+                // Start timing the API response
+                apiResponseStart = Date.now();
+                
+                // Show loading message
+                showLoadingMessage("Please wait while we fetch the results...");
+                
+                // Show skeleton loader after a short delay
+                setTimeout(() => {
+                    if (Date.now() - apiResponseStart > 300) { // If API hasn't responded in 300ms
+                        document.getElementById('skeletonLoader').style.display = 'block';
+                    }
+                }, 300);
+                
+                // After 3 seconds, if still loading, update message to inform about cold start
+                setTimeout(() => {
+                    if (Date.now() - apiResponseStart > 3000 && isFirstFetch) {
+                        isServerCold = true;
+                        showLoadingMessage("The server is warming up (first request may take 20-30 seconds). Please wait...");
+                    }
+                }, 3000);
+                
                 const url = `${API_BASE_URL}/api/student/${rollNumber}`;
-                
-                // Set a timeout for the API request
-                const timeoutPromise = new Promise((_, reject) => {
-                    apiTimeout = setTimeout(() => {
-                        reject(new Error('Request timed out'));
-                    }, 60000); // 60 seconds timeout
-                });
-                
-                // Race between the fetch and the timeout
-                const response = await Promise.race([
-                    fetch(url),
-                    timeoutPromise
-                ]);
-                
-                // Clear the timeout
-                clearTimeout(apiTimeout);
-                
-                // Server is now awake for future requests
-                isServerAwake = true;
-                
+                const response = await fetch(url);
                 const result = await response.json();
                 
+                // Track that we've completed one fetch
+                isFirstFetch = false;
+                
+                // Hide the skeleton loader
+                document.getElementById('skeletonLoader').style.display = 'none';
+                
                 if (result.success) {
-                    // Process the data to detect subjects with data
+                    // Update loading message to success
+                    if (isServerCold) {
+                        showSuccessMessage("Server is now active! Loading results...");
+                        await new Promise(resolve => setTimeout(resolve, 1000)); // Show success message briefly
+                    }
+                    
+                    // Process the data
                     const data = result.data;
                     
-                    // Process the subjects to group related components
-                    processSubjects(data);
+                    // Extract all active components for this student with their max marks
+                    const activeComponents = new Set();
+                    const componentMaxMarks = {};
+                    
+                    // Group subjects by their base name (before the underscore)
+                    const groupedSubjects = {};
+                    const mainSubjects = [];
+                    
+                    // Extract Max_Marks values first (before processing subjects)
+                    if (data.subjects && Array.isArray(data.subjects)) {
+                        // First scan specifically for Max_Marks fields
+                        data.subjects.forEach(subject => {
+                            if (subject.name && subject.name.includes('_Max_Marks')) {
+                                const parts = subject.name.split('_Max_Marks')[0].split('_');
+                                const baseSubjectName = parts[0]; // First part is subject name
+                                
+                                if (parts.length > 1) {
+                                    // Extract component name (everything between subject name and _Max_Marks)
+                                    const componentName = subject.name.substring(baseSubjectName.length + 1, subject.name.length - 10); // 10 is the length of "_Max_Marks"
+                                    const maxMarks = subject.obtained || 0;
+                                    
+                                    // Store max marks for this component
+                                    if (maxMarks > 0) {
+                                        componentMaxMarks[componentName] = maxMarks;
+                                        console.log(`Found max marks for ${componentName}: ${maxMarks}`);
+                                    }
+                                }
+                            }
+                        });
+                        
+                        // Now process all subjects to build the groupedSubjects object
+                        data.subjects.forEach(subject => {
+                            // Extract the base subject name and component
+                            if (!subject.name) return;
+                            
+                            // Handle Cycle Test components
+                            if (subject.name.includes('Cycle_Test_') && subject.name.includes('_Obtained')) {
+                                const parts = subject.name.split('_Obtained')[0].split('_');
+                                const baseSubjectName = parts[0]; // The subject name
+                                
+                                // Create component name based on cycle test number
+                                let componentName = parts.slice(1).join('_'); // e.g., "Cycle_Test_1"
+                                
+                                // Create the subject group if it doesn't exist
+                                if (!groupedSubjects[baseSubjectName]) {
+                                    groupedSubjects[baseSubjectName] = {
+                                        name: baseSubjectName,
+                                        maxMarks: 100,
+                                        components: {},
+                                        obtained: 0,
+                                        grade: '-',
+                                        hasData: false
+                                    };
+                                }
+                                
+                                // Get the marks from the subject data
+                                const marks = subject.obtained || 0;
+                                
+                                // Display name for Cycle Tests
+                                const cycleNumber = componentName.split('_')[2]; // Extract number from Cycle_Test_N
+                                const displayName = `Cycle Test ${cycleNumber}`;
+                                
+                                // Add the component to the subject
+                                if (!groupedSubjects[baseSubjectName].components[componentName]) {
+                                    groupedSubjects[baseSubjectName].components[componentName] = {
+                                        marks: marks,
+                                        displayName: displayName
+                                    };
+                                } else {
+                                    // Update marks if this is being re-processed
+                                    groupedSubjects[baseSubjectName].components[componentName].marks = marks;
+                                }
+                                
+                                // If the component has marks > 0, add it to active components
+                                if (marks > 0) {
+                                    activeComponents.add(componentName);
+                                    groupedSubjects[baseSubjectName].hasData = true;
+                                }
+                                
+                                return; // Skip standard processing
+                            }
+                            
+                            // Handle special case for Periodic Test-I and Periodic Test-II
+                            if (subject.name.includes('Periodic_Test-I') || subject.name.includes('Periodic_Test-II')) {
+                                const testParts = subject.name.split('_');
+                                const baseSubjectName = testParts[0]; // The subject name
+                                
+                                // Create the base component name
+                                let componentName = '';
+                                if (subject.name.includes('Periodic_Test-I')) {
+                                    componentName = 'Periodic_Test-I';
+                                    if (subject.name.includes('_Obtained')) {
+                                        componentName = 'Periodic_Test-I';
+                                    }
+                                } else {
+                                    componentName = 'Periodic_Test-II';
+                                    if (subject.name.includes('_Obtained')) {
+                                        componentName = 'Periodic_Test-II';
+                                    }
+                                }
+                                
+                                // Skip if this is a Max_Marks field
+                                if (subject.name.includes('Max_Marks')) return;
+                                
+                                // Create the subject group if it doesn't exist
+                                if (!groupedSubjects[baseSubjectName]) {
+                                    groupedSubjects[baseSubjectName] = {
+                                        name: baseSubjectName,
+                                        maxMarks: 100,
+                                        components: {},
+                                        obtained: 0,
+                                        grade: '-',
+                                        hasData: false
+                                    };
+                                }
+                                
+                                // Get the marks from the subject data
+                                const marks = subject.obtained || 0;
+                                
+                                // Add the component to the subject
+                                if (!groupedSubjects[baseSubjectName].components[componentName]) {
+                                    groupedSubjects[baseSubjectName].components[componentName] = {
+                                        marks: marks,
+                                        displayName: componentName.replace(/_/g, ' ')
+                                    };
+                                } else {
+                                    // Update marks if this is being re-processed
+                                    groupedSubjects[baseSubjectName].components[componentName].marks = marks;
+                                }
+                                
+                                // If the component has marks > 0, add it to active components
+                                if (marks > 0) {
+                                    activeComponents.add(componentName);
+                                    groupedSubjects[baseSubjectName].hasData = true;
+                                }
+                                
+                                return; // Skip the standard processing
+                            }
+                            
+                            const parts = subject.name.split('_');
+                            const baseSubjectName = parts[0]; // Hindi, English, Math, etc.
+                            
+                            // Only process if there's a component (parts > 1)
+                            if (parts.length > 1) {
+                                let componentName = subject.name.substring(baseSubjectName.length + 1);
+                                
+                                // Check if component ends with "_Obtained" and remove it
+                                if (componentName.endsWith("_Obtained")) {
+                                    componentName = componentName.replace("_Obtained", "");
+                                }
+                                
+                                let baseComponentName;
+                                // Handle specially formatted fields like Hindi_Periodic_Test_Max_Marks
+                                if (subject.name.includes('_Max_Marks')) {
+                                    const fullName = subject.name;
+                                    const baseSubjectName = parts[0]; // e.g., Hindi
+                                    baseComponentName = fullName.substring(baseSubjectName.length + 1, fullName.length - 10); // "Periodic_Test"
+                                    
+                                    const maxMarks = subject.obtained || 0;
+                                    if (maxMarks > 0) {
+                                        // Store for debugging
+                                        window.allComponentMaxMarks = window.allComponentMaxMarks || {};
+                                        window.allComponentMaxMarks[baseComponentName] = maxMarks;
+                                        
+                                        componentMaxMarks[baseComponentName] = maxMarks;
+                                        console.log(`Found max marks for ${baseComponentName}: ${maxMarks}`);
+                                    }
+                                    
+                                    // Skip further processing
+                                    return;
+                                }
+                                
+                                // Create the subject group if it doesn't exist
+                                if (!groupedSubjects[baseSubjectName]) {
+                                    groupedSubjects[baseSubjectName] = {
+                                        name: baseSubjectName,
+                                        maxMarks: 100,
+                                        components: {},
+                                        obtained: 0,
+                                        grade: '-',
+                                        hasData: false
+                                    };
+                                }
+                                
+                                // Get the marks from the subject data
+                                const marks = subject.obtained || 0;
+                                
+                                // Add the component to the subject
+                                if (!groupedSubjects[baseSubjectName].components[componentName]) {
+                                    groupedSubjects[baseSubjectName].components[componentName] = {
+                                        marks: marks,
+                                        displayName: componentName.replace(/_/g, ' ')
+                                    };
+                                } else {
+                                    // Update marks if this is being re-processed
+                                    groupedSubjects[baseSubjectName].components[componentName].marks = marks;
+                                }
+                                
+                                // If the component has marks > 0, add it to active components
+                                if (marks > 0) {
+                                    activeComponents.add(componentName);
+                                    groupedSubjects[baseSubjectName].hasData = true;
+                                }
+                            }
+                        });
+                        
+                        // Calculate total marks and grades for each subject
+                        for (const baseSubjectName in groupedSubjects) {
+                            const subject = groupedSubjects[baseSubjectName];
+                            let totalMarks = 0;
+                            
+                            // Sum up all component marks
+                            for (const componentName in subject.components) {
+                                totalMarks += subject.components[componentName].marks;
+                            }
+                            
+                            // Update the subject's total marks and grade
+                            subject.obtained = totalMarks;
+                            subject.grade = calculateGrade(totalMarks);
+                            
+                            // Only add subjects with data
+                            if (subject.hasData) {
+                                mainSubjects.push(subject);
+                            }
+                        }
+                        
+                        // Check if any subjects have component data
+                        if (mainSubjects.length > 0 && activeComponents.size > 0) {
+                            useDetailedView = true;
+                        }
+                        
+                        // Check if Sanskrit subject exists and set global flag
+                        window.hasSanskritSubject = mainSubjects.some(subject => 
+                            subject.name && subject.name.toLowerCase().includes('sanskrit')
+                        );
+                        console.log("Sanskrit subject exists:", window.hasSanskritSubject);
+                    }
+                    
+                    // Add processed data to the result
+                    data.hasDetailedView = useDetailedView;
+                    data.groupedSubjects = mainSubjects;
+                    data.activeComponents = Array.from(activeComponents);
+                    data.componentMaxMarks = componentMaxMarks;
+                    
+                    // Hide loading message
+                    hideLoadingMessage();
                     
                     return data;
                 }
+                
+                // Hide loading message in case of non-success
+                hideLoadingMessage();
                 return null; // Student not found
             } catch (error) {
                 console.error('Error fetching data:', error);
                 
-                // Clear the timeout if it exists
-                if (apiTimeout) {
-                    clearTimeout(apiTimeout);
-                }
+                // Update loading message to error
+                showErrorMessage("Error connecting to the server. Please try again later.");
+                
+                // Hide the skeleton loader
+                document.getElementById('skeletonLoader').style.display = 'none';
                 
                 return null;
             }
         }
 
-        function processSubjects(data) {
-            if (!data.subjects || !Array.isArray(data.subjects)) {
-                return;
-            }
+        function showLoadingMessage(message) {
+            const loadingMessage = document.getElementById('loadingMessage');
+            const loadingText = document.getElementById('loadingText');
+            
+            loadingText.textContent = message;
+            loadingMessage.classList.remove('error', 'success');
+            loadingMessage.style.display = 'block';
+            
+            // Disable search button during loading
+            document.getElementById('searchButton').disabled = true;
+        }
 
-            // Group subjects by their base name (before the underscore)
-            const groupedSubjects = {};
+        function showErrorMessage(message) {
+            const loadingMessage = document.getElementById('loadingMessage');
+            const loadingText = document.getElementById('loadingText');
             
-            data.subjects.forEach(subject => {
-                // First check if this is a component or a main subject
-                let isComponent = false;
-                let baseSubjectName = subject.name;
-                
-                // Check if this is a component of a subject (e.g., Hindi_Periodic_Test)
-                for (const componentName of COMPONENT_NAMES) {
-                    if (subject.name.includes('_' + componentName)) {
-                        // It's a component, extract the base subject name
-                        baseSubjectName = subject.name.split('_')[0];
-                        isComponent = true;
-                        break;
-                    }
-                }
-                
-                // If not already initialized, create the subject group
-                if (!groupedSubjects[baseSubjectName]) {
-                    groupedSubjects[baseSubjectName] = {
-                        name: baseSubjectName,
-                        maxMarks: subject.maxMarks || 100,
-                        obtained: isComponent ? 0 : (subject.obtained || 0),
-                        grade: isComponent ? '-' : (subject.grade || '-'),
-                        components: [],
-                        hasData: isComponent ? false : (subject.obtained > 0)
-                    };
-                }
-                
-                // If it's a component, add it to the list
-                if (isComponent) {
-                    groupedSubjects[baseSubjectName].components.push({
-                        name: subject.name,
-                        marks: subject.obtained || 0
-                    });
-                    
-                    // If any component has non-zero marks, the subject has data
-                    if (subject.obtained > 0) {
-                        groupedSubjects[baseSubjectName].hasData = true;
-                    }
-                    
-                    // Add to the total obtained marks for this subject
-                    groupedSubjects[baseSubjectName].obtained += subject.obtained || 0;
-                }
-            });
+            loadingText.textContent = message;
+            loadingMessage.classList.add('error');
+            loadingMessage.classList.remove('success');
+            loadingMessage.style.display = 'block';
             
-            // Calculate grades for subjects that didn't have them
-            for (const subjectName in groupedSubjects) {
-                const subject = groupedSubjects[subjectName];
-                if (subject.grade === '-') {
-                    subject.grade = calculateGrade(subject.obtained);
-                }
-            }
+            // Re-enable search button
+            document.getElementById('searchButton').disabled = false;
+        }
+
+        function showSuccessMessage(message) {
+            const loadingMessage = document.getElementById('loadingMessage');
+            const loadingText = document.getElementById('loadingText');
             
-            // Convert the grouped subjects object to an array and filter out subjects without data
-            const processedSubjects = Object.values(groupedSubjects)
-                .filter(subject => subject.hasData);
-            
-            // Replace the original subjects array with the processed one
-            data.processedSubjects = processedSubjects;
+            loadingText.textContent = message;
+            loadingMessage.classList.add('success');
+            loadingMessage.classList.remove('error');
+            loadingMessage.style.display = 'block';
+        }
+
+        function hideLoadingMessage() {
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('searchButton').disabled = false;
         }
 
         function calculateGrade(marks) {
@@ -779,14 +1246,14 @@
             document.getElementById('studentClass').textContent = data.class;
             document.getElementById('examYear').textContent = "2024-25";
             document.getElementById('schoolName').textContent = data.school;
-            document.getElementById('examName').textContent = data.examName;
+            document.getElementById('examName').textContent = data.examName; // Use the exam name from the backend
             
             // Set new fields
             document.getElementById('studentDOB').textContent = data.dob;
             document.getElementById('fatherName').textContent = data.fatherName;
             document.getElementById('motherName').textContent = data.motherName;
             
-            // Handle the signature image
+            // Handle the signature image - improved version with pre-checking
             const signatureImg = document.getElementById('examInchargeSignature');
             
             // Function to check if image exists and display it
@@ -828,15 +1295,284 @@
             // Call the function to handle signatures
             handleSignature();
             
-            // Clear previous table rows
-            const tableBody = document.getElementById('marksTableBody');
+            // Decide which table to show based on available data
+            const simpleTableContainer = document.getElementById('simpleTableContainer');
+            const detailedTableContainer = document.getElementById('detailedTableContainer');
+            
+            if (data.hasDetailedView) {
+                // Show the detailed table and hide the simple one
+                simpleTableContainer.style.display = 'none';
+                detailedTableContainer.style.display = 'block';
+                
+                // Create dynamic table headers based on active components
+                createDetailedTableHeaders(data.activeComponents, data.componentMaxMarks);
+                
+                // Populate the detailed table
+                populateDetailedTable(data.groupedSubjects, data.activeComponents);
+            } else {
+                // Show the simple table and hide the detailed one
+                simpleTableContainer.style.display = 'block';
+                detailedTableContainer.style.display = 'none';
+                
+                // Populate the simple table
+                populateSimpleTable(data.groupedSubjects);
+            }
+            
+            // Set summary information
+            document.getElementById('totalObtained').textContent = data.totalObtained;
+            document.getElementById('totalMax').textContent = data.totalMarks;
+            document.getElementById('percentage').textContent = data.percentage;
+            document.getElementById('cgpa').textContent = data.cgpa;
+            
+            // Set result
+            const resultStatus = document.getElementById('resultStatus');
+            resultStatus.textContent = data.result;
+            resultStatus.className = data.result === 'PASS' || data.result === 'Pass' ? 'pass' : 'fail';
+        }
+
+        function createDetailedTableHeaders(activeComponents, componentMaxMarks) {
+            const tableHead = document.getElementById('detailedTableHead');
+            tableHead.innerHTML = '';
+            
+            // Create first header row
+            const headerRow1 = document.createElement('tr');
+            
+            // Subject column (rowspan=2)
+            const subjectHeader = document.createElement('th');
+            subjectHeader.textContent = 'Subject';
+            subjectHeader.setAttribute('rowspan', '2');
+            headerRow1.appendChild(subjectHeader);
+            
+            // Components columns (colspan=activeComponents.length)
+            const componentsHeader = document.createElement('th');
+            componentsHeader.textContent = 'Continuous Comprehensive Evaluation';
+            componentsHeader.setAttribute('colspan', activeComponents.length);
+            headerRow1.appendChild(componentsHeader);
+            
+            // Total column (rowspan=2)
+            const totalHeader = document.createElement('th');
+            totalHeader.textContent = 'Total';
+            totalHeader.setAttribute('rowspan', '2');
+            totalHeader.className = "total-header";
+            totalHeader.innerHTML += '<br>(100)';
+            headerRow1.appendChild(totalHeader);
+            
+            // Grade column (rowspan=2)
+            const gradeHeader = document.createElement('th');
+            gradeHeader.textContent = 'Grade';
+            gradeHeader.setAttribute('rowspan', '2');
+            gradeHeader.className = "grade-header";
+            headerRow1.appendChild(gradeHeader);
+            
+            // Create second header row for component names
+            const headerRow2 = document.createElement('tr');
+            
+            // Add each active component as a column
+            activeComponents.forEach(componentName => {
+                window.addDebug(`Processing component: ${componentName}`);
+                
+                const componentHeader = document.createElement('th');
+                componentHeader.className = "component-header";
+                
+                // Predefined max marks values per your specifications
+                const hardcodedMaxMarks = {
+                    "Periodic_Test": 10,
+                    "Periodic_Test-I": 10,
+                    "Periodic_Test-II": 10,
+                    "Annual_Exam_Periodic_Test": 20, // Special case for Periodic Test in Annual Exam
+                    "Subject_Enrichment": 5,
+                    "Notebook_Submission": 5,
+                    "Mid_Term": 40,
+                    "Sanskrit_Mid_Term": 60, // Special case for Sanskrit
+                    "SEE": 40,
+                    "Sanskrit_SEE": 60, // Special case for Sanskrit SEE
+                    "Subject_Enrichment_Activity": 5, // Alternative name
+                    "Oral_Skill": 20,
+                    "Learner_Diary": 10,
+                    "Learners_Diary": 10, // Alternative spelling
+                    "MDP": 20,
+                    "Sanskrit_MDP": 10, // Special case for Sanskrit MDP
+                    "Half_Yearly_Exam": 30,
+                    "Annual_Exam": 50,
+                    "Oral": 20,
+                    // New Cycle Test components
+                    "Cycle_Test_1": 20,
+                    "Cycle_Test_2": 20,
+                    "Cycle_Test_3": 20,
+                    "Cycle_Test_4": 20,
+                    "Cycle_Test_5": 20,
+                    "Cycle_Test_6": 20,
+                    "Cycle_Test_7": 20,
+                    "Cycle_Test_8": 20
+                };
+                
+                // Get display name by replacing underscores with spaces
+                const displayName = componentName.replace(/_/g, ' ');
+                
+                // Split long component names onto multiple lines
+                let formattedName = displayName;
+                
+                // If the name has spaces and is longer than 10 characters, split at space
+                if (displayName.includes(' ') && displayName.length > 10) {
+                    // Split at a space character, preferably near the middle
+                    const words = displayName.split(' ');
+                    if (words.length >= 2) {
+                        // If there are at least 2 words, join them with line breaks
+                        formattedName = words.join('<br>');
+                    }
+                }
+                
+                // Set default max marks based on component name and special cases
+                let finalMaxMarks = 0;
+                
+                // First check if we have actual data from API
+                if (componentMaxMarks[componentName]) {
+                    finalMaxMarks = componentMaxMarks[componentName];
+                } 
+                // Then fallback to debug data if available
+                else if (window.allComponentMaxMarks && window.allComponentMaxMarks[componentName]) {
+                    finalMaxMarks = window.allComponentMaxMarks[componentName];
+                }
+                // Special case handling for Periodic Tests
+                else if ((componentName === "Periodic_Test" || 
+                          componentName === "Periodic_Test-I" ||
+                          componentName === "Periodic_Test-II") && 
+                         activeComponents.includes("Annual_Exam")) {
+                    finalMaxMarks = 20; // Periodic_Test in Annual_Exam context
+                }
+                // Special case handling for Mid Term in Sanskrit
+                else if (componentName === "Mid_Term" && window.hasSanskritSubject) {
+                    finalMaxMarks = 60; // Mid_Term for Sanskrit subject
+                }
+                // Special case for MDP in Sanskrit subjects
+                else if (componentName === "MDP" && window.hasSanskritSubject) {
+                    finalMaxMarks = 10; // MDP for Sanskrit subject
+                }
+                // Special case for SEE in Sanskrit subjects
+                else if (componentName === "SEE" && window.hasSanskritSubject) {
+                    finalMaxMarks = 60; // SEE for Sanskrit subject
+                }
+                // Special handling for SEE component
+                else if (componentName.includes("SEE")) {
+                    finalMaxMarks = 40;
+                }
+                // Standard hardcoded values
+                else if (hardcodedMaxMarks[componentName]) {
+                    finalMaxMarks = hardcodedMaxMarks[componentName];
+                }
+                // Special case for component names with Max_Marks in them
+                else if (componentName.includes("Max_Marks")) {
+                    // Extract the base component name
+                    const baseComponent = componentName.split("_Max_Marks")[0];
+                    if (hardcodedMaxMarks[baseComponent]) {
+                        finalMaxMarks = hardcodedMaxMarks[baseComponent];
+                    }
+                }
+                
+                // Extract the component display name without any "Max_Marks" text
+                let cleanDisplayName = formattedName;
+                if (cleanDisplayName.includes("Max Marks")) {
+                    cleanDisplayName = cleanDisplayName.split("Max Marks")[0].trim();
+                }
+                
+                // Preserve exact column display names as specified
+                const displayNames = {
+                    "periodic test": "Periodic Test-I",
+                    "periodic test i": "Periodic Test-I",
+                    "periodic test-i": "Periodic Test-I",
+                    "periodic test ii": "Periodic Test-II",
+                    "periodic test-ii": "Periodic Test-II",
+                    "subject enrichment": "Subject Enrichment",
+                    "subject enrichment activity": "Subject Enrichment Activity",
+                    "notebook submission": "Notebook Submission",
+                    "mid term": "Mid Term",
+                    "see": "SEE",
+                    "oral skill": "Oral Skill",
+                    "learners diary": "Learners Diary",
+                    "mdp": "MDP",
+                    "half yearly exam": "Half Yearly Exam",
+                    "annual exam": "Annual Exam",
+                    "cycle test 1": "Cycle Test 1",
+                    "cycle test 2": "Cycle Test 2",
+                    "cycle test 3": "Cycle Test 3",
+                    "cycle test 4": "Cycle Test 4",
+                    "cycle test 5": "Cycle Test 5",
+                    "cycle test 6": "Cycle Test 6",
+                    "cycle test 7": "Cycle Test 7",
+                    "cycle test 8": "Cycle Test 8"
+                };
+                
+                // Check if we should use a specific display name
+                const lcName = cleanDisplayName.toLowerCase();
+                Object.keys(displayNames).forEach(key => {
+                    if (lcName.includes(key)) {
+                        cleanDisplayName = displayNames[key];
+                    }
+                });
+                
+                // Use a cleaner, more standardized display format showing component name and max marks
+                componentHeader.innerHTML = `
+                    <div style="margin:0; padding:0;">${cleanDisplayName}</div>
+                    <div style="margin:3px 0; padding:2px; color:#444; display:block !important; width:auto; text-align:center; font-weight:bold; font-size:13px;">(${finalMaxMarks})</div>
+                `;
+                
+                headerRow2.appendChild(componentHeader);
+            });
+            
+            // Add headers to the table
+            tableHead.appendChild(headerRow1);
+            tableHead.appendChild(headerRow2);
+        }
+
+        function populateDetailedTable(subjects, activeComponents) {
+            const tableBody = document.getElementById('detailedTableBody');
             tableBody.innerHTML = '';
             
-            // Use the processed subjects if available, otherwise use the original subjects
-            const subjectsToDisplay = data.processedSubjects || data.subjects;
+            // Add subject rows to the detailed table
+            subjects.forEach(subject => {
+                const row = document.createElement('tr');
+                
+                // Add subject name
+                const nameCell = document.createElement('td');
+                nameCell.textContent = subject.name;
+                row.appendChild(nameCell);
+                
+                // Add cells for each active component
+                activeComponents.forEach(componentName => {
+                    const cell = document.createElement('td');
+                    
+                    if (subject.components && subject.components[componentName]) {
+                        cell.textContent = subject.components[componentName].marks;
+                    } else {
+                        cell.textContent = '-';
+                    }
+                    
+                    row.appendChild(cell);
+                });
+                
+                // Add total cell
+                const totalCell = document.createElement('td');
+                totalCell.textContent = subject.obtained || '0';
+                row.appendChild(totalCell);
+                
+                // Add grade cell
+                const gradeCell = document.createElement('td');
+                gradeCell.textContent = subject.grade;
+                gradeCell.className = getGradeClass(subject.grade);
+                row.appendChild(gradeCell);
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Function to update component max marks when needed - Removed as no longer needed
+
+        function populateSimpleTable(subjects) {
+            const tableBody = document.getElementById('simpleTableBody');
+            tableBody.innerHTML = '';
             
-            // Add subject rows
-            subjectsToDisplay.forEach(subject => {
+            // Add subject rows to the simple table
+            subjects.forEach(subject => {
                 const row = document.createElement('tr');
                 
                 const nameCell = document.createElement('td');
@@ -846,7 +1582,7 @@
                 maxMarksCell.textContent = subject.maxMarks;
                 
                 const obtainedCell = document.createElement('td');
-                obtainedCell.textContent = subject.obtained;
+                obtainedCell.textContent = subject.obtained || '0';
                 
                 const gradeCell = document.createElement('td');
                 gradeCell.textContent = subject.grade;
@@ -859,51 +1595,6 @@
                 
                 tableBody.appendChild(row);
             });
-            
-            // Set summary information
-            document.getElementById('totalObtained').textContent = data.totalObtained;
-            document.getElementById('totalMax').textContent = data.totalMarks;
-            document.getElementById('percentage').textContent = data.percentage;
-            document.getElementById('cgpa').textContent = data.cgpa;
-            
-            // Set result
-            const resultStatus = document.getElementById('resultStatus');
-            resultStatus.textContent = data.result;
-            resultStatus.className = data.result === 'PASS' ? 'pass' : 'fail';
-        }
-
-        function showLoading() {
-            const skeletonLoader = document.getElementById('skeletonLoader');
-            const loadingMessage = document.getElementById('loadingMessage');
-            const searchButton = document.getElementById('searchButton');
-            
-            // Show skeleton loader
-            skeletonLoader.style.display = 'block';
-            
-            // Show loading message if server is likely asleep
-            if (!isServerAwake) {
-                loadingMessage.style.display = 'block';
-            }
-            
-            // Disable the search button
-            searchButton.disabled = true;
-            searchButton.textContent = 'Loading...';
-        }
-
-        function hideLoading() {
-            const skeletonLoader = document.getElementById('skeletonLoader');
-            const loadingMessage = document.getElementById('loadingMessage');
-            const searchButton = document.getElementById('searchButton');
-            
-            // Hide skeleton loader
-            skeletonLoader.style.display = 'none';
-            
-            // Hide loading message
-            loadingMessage.style.display = 'none';
-            
-            // Enable the search button
-            searchButton.disabled = false;
-            searchButton.textContent = 'Get Result';
         }
 
         function fetchResult() {
@@ -915,6 +1606,12 @@
             resultCard.style.display = 'none';
             errorMessage.style.display = 'none';
             
+            // Reset detailed view flag
+            useDetailedView = false;
+            
+            // Reset Sanskrit subject flag
+            window.hasSanskritSubject = false;
+            
             // Validate input
             if (!rollNumber.trim()) {
                 errorMessage.textContent = "Please enter an admission number";
@@ -922,29 +1619,35 @@
                 return;
             }
             
-            // Show loading state
-            showLoading();
-            
             // Fetch data from backend
             fetchDataFromBackend(rollNumber).then(data => {
-                // Hide loading state
-                hideLoading();
-                
                 if (data) {
                     displayResult(data, rollNumber);
                     resultCard.style.display = 'block';
                 } else {
                     errorMessage.style.display = 'block';
                 }
-            }).catch(error => {
-                // Hide loading state
-                hideLoading();
-                
-                // Show error message
-                errorMessage.textContent = "Failed to fetch results. Please try again later.";
-                errorMessage.style.display = 'block';
-                console.error('Error:', error);
             });
+        }
+        
+        function printResult() {
+            // Make sure the result card is visible
+            const resultCard = document.getElementById('resultCard');
+            if (resultCard.style.display === 'none') {
+                alert('Please search for a student result first');
+                return;
+            }
+            
+            // Check if we need landscape mode (for detailed table)
+            const detailedTable = document.getElementById('detailedTableContainer');
+            if (detailedTable.style.display !== 'none') {
+                document.body.classList.add('print-landscape');
+            } else {
+                document.body.classList.remove('print-landscape');
+            }
+            
+            // Print the page
+            window.print();
         }
         
         // Add event listener for Enter key on roll number input
